@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<script>
+var DB;
+//创建数据库方法
+function initDatabase() {
+    if (!window.openDatabase) {
+        alert('浏览器不支持Web SQL数据库.');
+    } else {
+        var dbName = 'mydb'; //定义数据库名称
+        var dbVersion = '1.0'; //定义数据库版本
+        var dbDec = 'DEMO Database'; //定义数据库说明信息
+        var dbSize = 100000; //  定义数据库大小
+        DB = openDatabase(dbName, dbVersion, dbDec, dbSize); //创建数据库，并调用showResult方法
+    }
+}
+//创建数据表
+function createTable()
+{
+	DB.transaction(function(tx){
+		tx.executeSql('create table if not exists USERINFO(USERNAME,PASSWORD,EMAIL,STUDENTNO)');
+	});
+}
+//注册方法
+function register()
+{
+	
+	initDatabase();
+	createTable();
+	var username = document.getElementById("username").value;
+	var password = document.getElementById("password").value;
+	var email = document.getElementById("email").value;
+	var studentno = document.getElementById("studentno").value;
+
+    if(document.getElementById("username").checkValidity()
+	&& document.getElementById("password").checkValidity()
+	&& document.getElementById("email").checkValidity()
+	&& document.getElementById("studentno").checkValidity())
+   {
+	DB.transaction(function(tx){
+		tx.executeSql(
+				'select * from USERINFO where USERNAME=?',
+				[username],
+				function(tx,rs)
+				{
+					if (rs.rows.length>0) //用户名已经存在
+					{
+						alert("该用户名已经存在，请使用其他用户名注册。");
+					}
+					else
+					{
+						DB.transaction(function(tx)
+						{
+							tx.executeSql( //将新用户注册信息插入数据库
+								'insert into USERINFO(USERNAME,PASSWORD,EMAIL,STUDENTNO) values(?,?,?,?)',
+								[username,password,email,studentno],
+								function(tx,rs)
+								{
+									alert('注册成功');
+								},
+								function(tx,error)
+								{
+									alert('注册失败');
+								}
+							);
+						});
+					}
+				}
+		);
+	});
+   }
+   else
+   {
+	   if(!document.getElementById("username").checkValidity())
+	   {
+	          alert("用户名输入格式不正确,用户名只允许是英文或数字，且至少为6位！");
+	   }
+	   if(!document.getElementById("email").checkValidity())
+	   {
+	          alert("电子邮箱输入格式不正确！");
+	   }
+	   if(!document.getElementById("studentno").checkValidity())
+	   {
+	          alert("学号输入格式不正确,学号只允许为数字！");
+	   }
+   }
+}
+//登录方法
+function login()
+{
+	initDatabase();
+	var username = document.getElementById("login_username").value;
+	var password = document.getElementById("login_password").value;
+	DB.transaction(function(tx){
+		tx.executeSql(
+			'select * from USERINFO where USERNAME=? and PASSWORD=?',
+			[username,password],
+			function(tx,rs){
+				if (rs.rows.length==0) //未查询到指定用户名与密码的用户信息
+				{
+					alert("登录失败");
+				}
+				else
+				{
+					var msg ='';
+					for(var i=0;i<rs.rows.length;i++)
+					{
+						msg += '您好，'+rs.rows.item(i).USERNAME 
+							+'\n\n您的email是 : ' +rs.rows.item(i).EMAIL
+							+'\n\n您的学号是：'+rs.rows.item(i).STUDENTNO;
+					}
+					alert(msg);
+				}
+			}
+		);
+	});
+}
+
+</script>
+<body>
+<div>
+	<div style="float:left;border-style:outset;width:300px;height:300px">
+		<center>
+		<h2>注册新用户</h2>
+		<form>
+		<table>
+			<tr>
+				<td>用户名</td>
+				<td><input type="text" id="username" required="true" placeholder="请输入用户名" pattern="^[a-zA-Z0-9]{6,}$"/></td>
+			</tr>
+			<tr>
+				<td>密码</td>
+				<td><input type="password" id="password" required="true"  placeholder="请输入密码"/></td>
+			</tr>
+			<tr>
+				<td>电子邮箱</td>
+				<td><input type="email" id="email" required="true" placeholder="请输入电子邮箱"/></td>
+			</tr>
+			<tr>
+				<td>学号</td>
+				<td><input type="text" id="studentno" required="true" placeholder="请输入学号" pattern="^[0-9]+$"/></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="right">
+					<input type="button"  value="注册新用户" onclick="return register()"/>
+				    <input type="reset" value="重置">
+			  </td>
+			</tr>
+		</table>	
+	    </form>
+		</center>
+	</div>
+	<div style="float:left;border-style:outset;margin-left:30px;width:300px;height:300px">
+		<center>
+		<h2>用户登录</h2>
+		<form id="logForm">
+		<table>
+			<tr>
+				<td>用户名</td>
+				<td><input type="text" id="login_username" placeholder="请输入用户名"/></td>
+			</tr>
+			<tr>
+				<td>密码</td>
+				<td><input type="password" id="login_password" placeholder="请输入密码"/></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="right">
+					<input type="button" value="用户登录" onclick="login()"/>
+				</td>
+			</tr>
+		</table>
+	    </form>
+		</center>
+	</div>
+</div>
+<br>
+
+</body>
+</html>
