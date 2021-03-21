@@ -1,0 +1,91 @@
+<html> 
+<script type="text/javascript"> 
+var slen = 70;    //秒针的长度
+var mlen = 65; 
+var hlen = 45; 
+var ls = 0;       //计算当前的秒数
+var lm = 0;
+var lh = 0; 
+function draw()
+{
+    var c = document.getElementById("myCanvas"); 
+    var cxt = c.getContext("2d"); 
+	
+    cxt.beginPath(); 
+    cxt.arc(200, 150, 5, 0, 2 * Math.PI, true); //绘制表盘中心
+    cxt.fill(); 
+    cxt.closePath(); 
+   
+    cxt.beginPath(); 
+    cxt.arc(200, 150, 100, 0, 2 * Math.PI, true); //绘制表盘外围
+    cxt.strokeStyle="red"; 
+	cxt.stroke(); 
+    cxt.closePath(); 
+   
+    cxt.beginPath(); 
+    cxt.translate(200, 150); //平移原点
+    cxt.rotate(-Math.PI / 2); 
+    cxt.save();        
+    for (var i = 0; i < 60; i++) //虚幻绘制矩形刻度线
+	{ 
+  	  if (i % 5 == 0) 
+	  { 
+    	  cxt.fillRect(80, 0, 20, 5); 
+      } 
+	  else 
+	  { 
+      	  cxt.fillRect(90, 0, 10, 2); 
+      } 
+      cxt.rotate(Math.PI / 30); //每绘制一个刻度线旋转一次
+	} 
+    cxt.closePath(); 
+	Refresh();
+	setInterval("Refresh();", 1000); //每一秒钟调用refresh方法刷新时针，分针，秒针位置
+}
+function Refresh()
+{
+	var c = document.getElementById("myCanvas"); 
+    var cxt = c.getContext("2d"); 
+	cxt.restore(); 
+	cxt.save(); 
+	cxt.rotate(ls * Math.PI / 30); 
+	cxt.clearRect(5, -1, slen+1, 4); //清除秒针上次显示内容
+	cxt.restore(); 
+	cxt.save(); 
+
+	cxt.rotate(lm * Math.PI / 30 + ls * Math.PI / 1800); 
+	cxt.clearRect(5, -1, mlen+1, 5); //清除分针上次显示内容
+	cxt.restore(); 
+	cxt.save(); 
+
+	cxt.rotate(lh * Math.PI / 6 + lm * Math.PI / 360); 
+	cxt.clearRect(5, -3, hlen+1, 6); //清除时针上次显示内容
+	var time = new Date(); 
+	var s = ls=time.getSeconds(); //获得当前时间（秒钟）
+	var m = lm=time.getMinutes(); //获得当前时间（分钟）
+	var h = lh=time.getHours();	 //获得当前时间（小时）
+	cxt.restore(); 
+	cxt.save(); 
+	cxt.rotate(s * Math.PI / 30); //根据秒钟数设置秒针位置
+	cxt.fillRect(5, 0, slen, 2); //重新绘制秒针
+	cxt.restore(); 
+	cxt.save(); 
+	cxt.rotate(m * Math.PI / 30 + s * Math.PI / 1800); //根据当前分钟数设置分钟位置
+	cxt.fillRect(5, 0, mlen, 3); //重新绘制分针
+	cxt.restore(); 
+	cxt.save(); 
+	cxt.rotate(h * Math.PI / 6 + m * Math.PI / 360); //根据当前小时数设置时针位置
+	cxt.fillRect(5, -2, hlen, 4); //重新绘制时针
+	
+}	
+
+</script>
+<body> 
+<fieldset>
+	<legend>绘制时钟</legend>
+    <canvas id="myCanvas" width="400" height="300"></canvas> 
+	<br>
+	<button onClick="draw()">绘制</button> 
+</fieldset>
+</body> 
+</html>
