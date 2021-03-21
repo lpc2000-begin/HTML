@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/
+TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title></title>
+</head>
+<body>
+<script>
+//注册方法
+function reg()
+{
+	var username = document.getElementById("username").value;
+	var email = document.getElementById("email").value;
+	var sno = document.getElementById("sno").value;
+	if(document.getElementById("username").checkValidity()//判断用户名是否通过校验
+	  &&document.getElementById("email").checkValidity()//判断电子邮箱是否通过校验
+	  &&document.getElementById("sno").checkValidity()//判断学号是否通过校验
+	)
+	{
+		alert(
+			'确认注册信息\n'+
+			'用户名：'+username+'\n'+
+			'电子邮箱：'+email+'\n'+
+			'学号：'+sno+'\n'
+		)	
+	}
+}
+</script>
+<form>
+<fieldset>
+<legend>校园网用户注册页面</legend>
+<center>
+<div style="padding:5px;width=600px">
+	<h4>用户登录信息</h4>
+	<table width='100%'>
+		<tr>
+			<td width='20%'>用户名</td>
+			<td width='40%'><input id="username" type="text" required="true" placeholder="请输入用户名"  pattern="^[a-zA-Z0-9]{6,}$"/></td>
+			<td width='40%'><span style="color:red;font-size:12px">只允许输入英文和数字,且长度至少为6位
+			<font color="red">*</font></span></td>
+		</tr>
+		<tr>
+			<td>邮箱</td>
+			<td><input id="email" type="email" required="true" placeholder="请输入电子邮箱" /></td>
+			<td><font color="red">*</font></td>
+		</tr>
+		<tr>
+			<td>学号</td>
+			<td><input   id="sno"   type="text" required="true" placeholder="请输入学号" pattern="^[0-9]+$"/></td>
+			<td><font color="red">*</font> <span id="strength"></span></td>
+		</tr>
+	</table>
+</div>
+
+<input type="submit" value="注册新用户" onclick="reg()">
+<input type="reset" value="重置">
+</center>
+</fieldset>
+</form>
+</body>
+</html>
