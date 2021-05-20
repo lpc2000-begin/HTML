@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../bootstrapValidator-dist/css/bootstrapValidator.min.css"/>
+
+    <script type="text/javascript" src="../jquery/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../bootstrapValidator-dist/js/bootstrapValidator.js"></script>
+    <link rel="stylesheet" href="../css/mybook.css">
+    <title>Document</title>
+    
+</head>
+<body>
+    <!-- 头部 -->
+    <div class="page-header">
+        <img class=" col-md-offset-1" src="../images/书 (1).png" alt=""><span id="span1">物流管理系统</span>
+      </div>
+    <!-- 身体 -->
+    <div class="row divbody">
+        <div class="col-md-6 col-md-offset-2 divLeft">
+            <br><br><br><br><h1>欢迎您的光临</h1>
+            <p id="p1">物流管理系统</p>
+        </div>
+        <div class="col-md-3  divlogin">
+           <form class="form-horizontal" id="defaultForm"
+           data-bv-message="This value is not valid"
+                      data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+               <h3>用户注册</h3><br><br>
+            <div class="form-group">
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputText3" name="username" placeholder="请输入用户名"
+                                  data-bv-message="The username is not valid"
+                                   required data-bv-notempty-message="用户名不能为空"
+                                   pattern="[a-zA-Z0-9_\.]+" data-bv-regexp-message="用户名只能由字母、数字、点和下划线组成"
+                                   data-bv-stringlength="true" data-bv-stringlength-min="2" data-bv-stringlength-max="30" data-bv-stringlength-message="用户名最少2位，最多30位"
+                                    />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-10">
+                <input type="password" class="form-control" id="inputPassword3" name="password" placeholder="请输入密码"
+                                  required data-bv-notempty-message="密码不能为空"
+                                  data-bv-identical="true" data-bv-identical-field="confirmPassword" data-bv-identical-message="2次输入密码必须相等"
+                                  pattern="[a-zA-Z0-9_\.]+" data-bv-regexp-message="密码只能由字母、数字、点和下划线组成"
+                                   data-bv-stringlength="true" data-bv-stringlength-min="6" data-bv-stringlength-max="18" data-bv-stringlength-message="密码最少6位，最多18位">
+              </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="inputPassword4" name="confirmPassword" placeholder="请再次输入密码"
+                                  required data-bv-notempty-message="密码不能为空"
+                                  data-bv-identical="true" data-bv-identical-field="password" data-bv-identical-message="2次输入密码必须相等"
+                                  pattern="[a-zA-Z0-9_\.]+" data-bv-regexp-message="密码只能由字母、数字、点和下划线组成"
+                                   data-bv-stringlength="true" data-bv-stringlength-min="6" data-bv-stringlength-max="18" data-bv-stringlength-message="密码最少6位，最多18位">
+                </div>
+              </div>
+            <div class="form-group">
+                <div class="col-sm-10">
+                  <input type="text" class="form-control " id="inputText4" name="phone" placeholder="请输入手机号"
+                  pattern="^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$" data-bv-regexp-message="手机号码格式不正确"
+                  required data-bv-notempty-message="手机号不能为空">
+                </div>
+              </div>
+            <div class="form-group">
+              <div class=" col-sm-10">
+                <div class="checkbox" id="divcheckbox1">
+                  <label>
+                    <input type="checkbox" id="checkbox1"> ****协议     
+                  </label>
+                </div>
+                <div class="col-sm-8 col-md-offset-6"><a href="../pages/Login.html">已有账号？点击登录</a></div>
+                
+              </div>
+            </div>
+            <div class="form-group">
+              <div class=" col-sm-10">
+                <button type="submit" class="btn btn-default form-control btn-primary" name="submit" id="submit1"  >注册</button>  
+              </div>
+            </div>
+
+            
+          </form> 
+        </div>
+        
+    </div>
+    <!-- 脚部 -->
+    <div class="row"></div>
+    <script type="text/javascript">
+      $(document).ready(function() {
+          $('#defaultForm').bootstrapValidator();
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+.divbody{
+    height: 500px;
+    background-color: rgb(42, 46, 49);
+}
+.divlogin{
+   
+    height: 500px;
+    background-color: azure;
+    
+    
+}
+#divcheckbox1{
+    display: inline;
+}
+.divLeft{
+        
+    color: white;
+    
+}
+#p1{
+    font-size:100px;
+}
+#span1{
+    font-size:25px;
+    color:rgb(38, 44, 51);
+}
+.div1{
+    height: 600px;
+    background-color: rgb(50, 55, 61);
+}
+.div11{
+    height: 600px;
+    background-color: rgb(66, 89, 116);
+}
+.div12{
+    height: 600px;
+    background-color: rgb(252, 247, 251);
+}
+
+
+
+
+
+
+
